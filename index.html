@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Chamber 1</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
+      background-image: url("hall2.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 95px);
+      grid-template-rows: repeat(3, 95px);
+      gap: 0;
+      background: black;
+      border: 6px solid black;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .grid-slot {
+      width: 95px;
+      height: 95px;
+      border: 2px solid black;
+      position: relative;
+      overflow: hidden;
+      background: black;
+    }
+
+    .photo-wrapper {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .photo-wrapper:active { cursor: grabbing; }
+
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      transition: transform 0.25s ease;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 3px;
+      left: 3px;
+      right: 3px;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 10;
+    }
+
+    .grid-slot:hover .controls { opacity: 1; }
+
+    .rotate-btn {
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      border: 1px solid white;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .answer-box {
+      text-align: center;
+      text-shadow: 0 2px 4px black;
+    }
+
+    .answer-box label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .answer-box input {
+      padding: 5px;
+      font-size: 14px;
+      width: 175px;
+    }
+
+    .answer-box button {
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .top-right-button {
+      position: fixed;
+      top: 15px;
+      right: 30px;
+      width: 45px;
+      height: auto;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .bottom-right-button {
+      position: fixed;
+      bottom: 18px;
+      right: 30px;
+      width: 65px;
+      height: auto;
+      cursor: pointer;
+      z-index: 20;
+      background: black;
+      padding: 5px;
+    }
+
+    .gman-image {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      width: 110px;
+      height: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease-in-out;
+      z-index: 30;
+    }
+
+    .gman-image.show { opacity: 1; }
+  </style>
+</head>
+
+<body>
+  <audio id="wrongAudio" src="nottoworry.mp3"></audio>
+  <audio id="bucketAudio" src="thisisabucket.mp3"></audio>
+
+  <img id="gmanImage" src="gman.jpg" alt="G-Man" class="gman-image" />
+  <img id="bucketButton" src="bucket.jpg" alt="Bucket Button" class="top-right-button" />
+  <img id="bunnyButton" src="bunny.jpg" alt="Bunny Button" class="bottom-right-button" />
+
+  <div class="page">
+    <div class="grid-container">
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo1" data-rotation="0"><img src="dog1.jpg" alt="Photo 1"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo2" data-rotation="0"><img src="dog2.jpg" alt="Photo 2"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo3" data-rotation="0"><img src="dog3.jpg" alt="Photo 3"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo4" data-rotation="0"><img src="dog4.jpg" alt="Photo 4"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo5" data-rotation="0"><img src="dog5.jpg" alt="Photo 5"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo6" data-rotation="0"><img src="dog6.jpg" alt="Photo 6"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo7" data-rotation="0"><img src="dog7.jpg" alt="Photo 7"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo8" data-rotation="0"><img src="dog8.jpg" alt="Photo 8"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+      <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo9" data-rotation="0"><img src="dog9.jpg" alt="Photo 9"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
+    </div>
+
+    <form id="codeForm" class="answer-box">
+      <label for="codeInput">"What's the hidden number?"</label>
+      <input type="text" id="codeInput" placeholder="???" autocomplete="off" required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    let draggedElement = null;
+    let bunnyIsVideo = false;
+
+    function rotatePhoto(button, degrees) {
+      const wrapper = button.closest(".photo-wrapper");
+      const img = wrapper.querySelector("img");
+      let currentRotation = parseInt(wrapper.dataset.rotation) || 0;
+      currentRotation += degrees;
+      wrapper.dataset.rotation = currentRotation;
+      img.style.transform = `rotate(${currentRotation}deg)`;
+    }
+
+    document.querySelectorAll(".photo-wrapper").forEach(wrapper => {
+      wrapper.addEventListener("dragstart", event => {
+        draggedElement = wrapper;
+        event.dataTransfer.setData("text/plain", wrapper.id);
+      });
+    });
+
+    document.querySelectorAll(".grid-slot").forEach(slot => {
+      slot.addEventListener("dragover", event => event.preventDefault());
+
+      slot.addEventListener("drop", event => {
+        event.preventDefault();
+        const currentOccupant = slot.querySelector(".photo-wrapper");
+        const originalSlot = draggedElement.parentElement;
+
+        if (currentOccupant && currentOccupant !== draggedElement) {
+          originalSlot.appendChild(currentOccupant);
+        }
+
+        slot.appendChild(draggedElement);
+      });
+    });
+
+    document.getElementById("codeForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      const userInput = document.getElementById("codeInput").value.trim();
+      const wrongAudio = document.getElementById("wrongAudio");
+      const gmanImage = document.getElementById("gmanImage");
+
+      if (userInput === "197") {
+        window.location.href = "https://ohlooklizard.github.io/testchamber2/";
+      } else {
+        wrongAudio.currentTime = 0;
+        wrongAudio.play();
+        gmanImage.classList.add("show");
+
+        setTimeout(() => {
+          gmanImage.classList.remove("show");
+        }, 800);
+
+        document.getElementById("codeInput").value = "";
+      }
+    });
+
+    document.getElementById("bucketButton").addEventListener("click", () => {
+      const bucketAudio = document.getElementById("bucketAudio");
+      bucketAudio.currentTime = 0;
+      bucketAudio.play();
+    });
+
+    document.getElementById("bunnyButton").addEventListener("click", () => {
+      const bunnyButton = document.getElementById("bunnyButton");
+
+      if (!bunnyIsVideo) {
+        const video = document.createElement("video");
+        video.id = "bunnyButton";
+        video.className = "bottom-right-button";
+        video.src = "bunnyblah.mp4";
+        video.autoplay = true;
+        video.muted = false;
+        video.playsInline = true;
+        video.controls = false;
+
+        video.addEventListener("ended", () => {
+          video.replaceWith(bunnyButton);
+          bunnyIsVideo = false;
+        });
+
+        bunnyButton.replaceWith(video);
+        bunnyIsVideo = true;
+      }
+    });
+  </script>
+</body>
+</html>
