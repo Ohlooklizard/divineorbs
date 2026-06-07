@@ -20,6 +20,16 @@
       overflow: hidden;
     }
 
+       .title { /* TITLEEEEE */
+      position: fixed;
+      top: 18px;
+      left: 24px;
+      z-index: 50;
+      font-size: 32px;
+      font-weight: bold;
+      text-shadow: 0 0 8px black, 0 0 14px black;
+    }
+    
     .page {
       min-height: 100vh;
       display: flex;
@@ -31,8 +41,8 @@
 
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(3, 95px);
-      grid-template-rows: repeat(3, 95px);
+      grid-template-columns: repeat(3, 190px);
+      grid-template-rows: repeat(3, 190px);
       gap: 0;
       background: black;
       border: 6px solid black;
@@ -40,9 +50,9 @@
     }
 
     .grid-slot {
-      width: 95px;
-      height: 95px;
-      border: 2px solid black;
+      width: 190px;
+      height: 190px;
+      border: 3px solid black;
       position: relative;
       overflow: hidden;
       background: black;
@@ -69,9 +79,9 @@
 
     .controls {
       position: absolute;
-      bottom: 3px;
-      left: 3px;
-      right: 3px;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
       display: flex;
       justify-content: space-between;
       opacity: 0;
@@ -81,13 +91,13 @@
 
     .grid-slot:hover .controls { opacity: 1; }
 
-    .rotate-btn {
+       .rotate-btn {
       background: rgba(0, 0, 0, 0.75);
       color: white;
       border: 1px solid white;
       border-radius: 3px;
-      padding: 2px 6px;
-      font-size: 12px;
+      padding: 4px 8px;
+      font-size: 16px;
       cursor: pointer;
     }
 
@@ -100,42 +110,45 @@
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .answer-box input {
-      padding: 5px;
-      font-size: 14px;
+      padding: 6px;
+      font-size: 15px;
       width: 175px;
     }
 
     .answer-box button {
-      padding: 5px 10px;
-      font-size: 14px;
+      padding: 6px 10px;
+      font-size: 15px;
       cursor: pointer;
     }
 
     .top-right-button {
       position: fixed;
-      top: 15px;
-      right: 30px;
-      width: 45px;
+      top: 20px;
+      right: 35px;
+      width: 50px;
       height: auto;
       cursor: pointer;
       z-index: 20;
     }
 
-    .bottom-right-button {
+        .bottom-right-media {
       position: fixed;
       bottom: 18px;
       right: 30px;
-      width: 65px;
-      height: auto;
+      width: 80px;
+      height: 105px;
+      object-fit: cover;
       cursor: pointer;
       z-index: 20;
       background: black;
       padding: 5px;
     }
+
+    .hidden { display: none; }
 
     .gman-image {  /* gman! not green man */
       position: fixed;
@@ -146,7 +159,7 @@
       height: auto;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease-in-out; /* fade speed */
+      transition: opacity 0.5s ease-in-out; /* fade speed */
       z-index: 30;
     }
 
@@ -155,12 +168,17 @@
 </head>
 
 <body>
+  <div class="title">Test Chamber 1</div>
+  
   <audio id="wrongAudio" src="nottoworry.mp3"></audio>
   <audio id="bucketAudio" src="thisisabucket.mp3"></audio>
+  <audio id="peacefulAudio" src="peaceful.mp3" loop></audio>
 
   <img id="gmanImage" src="gman.jpg" alt="G-Man" class="gman-image" />
   <img id="bucketButton" src="bucket.jpg" alt="Bucket Button" class="top-right-button" />
-  <img id="bunnyButton" src="bunny.jpg" alt="Bunny Button" class="bottom-right-button" />
+  
+<img id="bunnyImage" src="bunny.jpg" alt="Bunny Button" class="bottom-right-media" />
+  <video id="bunnyVideo" class="bottom-right-media hidden" src="bunnybleh.mp4" playsinline></video>
 
   <div class="page">
     <div class="grid-container">  <!-- da grid pix -->
@@ -183,8 +201,23 @@
   </div>
 
   <script>
-    let draggedElement = null;
-    let bunnyIsVideo = false;
+ let draggedElement = null;
+    let bucketHasHat = false;
+
+    const peacefulAudio = document.getElementById("peacefulAudio");
+
+    function startPeacefulAudio() {
+      peacefulAudio.volume = 0.35;
+      peacefulAudio.play().catch(() => {
+        // Browsers often block background audio until the first click/key press.
+      });
+    }
+
+    window.addEventListener("load", startPeacefulAudio);
+
+    ["click", "keydown", "dragstart"].forEach(eventName => {
+      document.addEventListener(eventName, startPeacefulAudio, { once: true });
+    });
 
     function rotatePhoto(button, degrees) {
       const wrapper = button.closest(".photo-wrapper");
@@ -230,6 +263,7 @@
       } else {
         wrongAudio.currentTime = 0;
         wrongAudio.play();
+
         gmanImage.classList.add("show");
 
         setTimeout(() => {
@@ -241,32 +275,39 @@
     });
 
     document.getElementById("bucketButton").addEventListener("click", () => {
+      const bucketButton = document.getElementById("bucketButton");
       const bucketAudio = document.getElementById("bucketAudio");
+
+      bucketHasHat = !bucketHasHat;
+      bucketButton.src = bucketHasHat ? "buckethat.jpg" : "bucket.jpg";
+
       bucketAudio.currentTime = 0;
       bucketAudio.play();
     });
 
-    document.getElementById("bunnyButton").addEventListener("click", () => {
-      const bunnyButton = document.getElementById("bunnyButton");
+    document.getElementById("bunnyImage").addEventListener("click", () => {
+      const bunnyImage = document.getElementById("bunnyImage");
+      const bunnyVideo = document.getElementById("bunnyVideo");
 
-      if (!bunnyIsVideo) {
-        const video = document.createElement("video");
-        video.id = "bunnyButton";
-        video.className = "bottom-right-button";
-        video.src = "bunnyblah.mp4";
-        video.autoplay = true;
-        video.muted = false;
-        video.playsInline = true;
-        video.controls = false;
+      bunnyImage.classList.add("hidden");
+      bunnyVideo.classList.remove("hidden");
 
-        video.addEventListener("ended", () => {
-          video.replaceWith(bunnyButton);
-          bunnyIsVideo = false;
-        });
+      bunnyVideo.currentTime = 0;
+      bunnyVideo.play();
 
-        bunnyButton.replaceWith(video);
-        bunnyIsVideo = true;
-      }
+      bunnyVideo.onended = () => {
+        bunnyVideo.classList.add("hidden");
+        bunnyImage.classList.remove("hidden");
+      };
+    });
+
+    document.getElementById("bunnyVideo").addEventListener("click", () => {
+      const bunnyImage = document.getElementById("bunnyImage");
+      const bunnyVideo = document.getElementById("bunnyVideo");
+
+      bunnyVideo.pause();
+      bunnyVideo.classList.add("hidden");
+      bunnyImage.classList.remove("hidden");
     });
   </script>
 </body>
