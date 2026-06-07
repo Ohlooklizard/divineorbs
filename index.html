@@ -13,10 +13,10 @@
       min-height: 100vh;
       font-family: Arial, sans-serif;
       color: white;
-      background-image: url("hall2.jpg");
+      background-image: url("hall2.jpg"); /* Background image */
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
+      background-repeat: no-repeat; /* nono repeat the image */
       overflow: hidden;
     }
 
@@ -137,7 +137,7 @@
       padding: 5px;
     }
 
-    .gman-image {
+    .gman-image {  /* gman! not green man */
       position: fixed;
       top: 50%;
       left: 20px;
@@ -146,7 +146,7 @@
       height: auto;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity 0.2s ease-in-out; /* fade speed */
       z-index: 30;
     }
 
@@ -163,7 +163,7 @@
   <img id="bunnyButton" src="bunny.jpg" alt="Bunny Button" class="bottom-right-button" />
 
   <div class="page">
-    <div class="grid-container">
+    <div class="grid-container">  <!-- da grid pix -->
       <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo1" data-rotation="0"><img src="dog1.jpg" alt="Photo 1"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
       <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo2" data-rotation="0"><img src="dog2.jpg" alt="Photo 2"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
       <div class="grid-slot"><div class="photo-wrapper" draggable="true" id="photo3" data-rotation="0"><img src="dog3.jpg" alt="Photo 3"><div class="controls"><button class="rotate-btn" onclick="rotatePhoto(this, -90)">↺</button><button class="rotate-btn" onclick="rotatePhoto(this, 90)">↻</button></div></div></div>
@@ -176,7 +176,7 @@
     </div>
 
     <form id="codeForm" class="answer-box">
-      <label for="codeInput">"What's the hidden number?"</label>
+      <label for="codeInput">"What's the hidden number?"</label>   <!-- whats in the boxxxx-->
       <input type="text" id="codeInput" placeholder="???" autocomplete="off" required />
       <button type="submit">Submit</button>
     </form>
