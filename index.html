@@ -164,10 +164,32 @@
     }
 
     .gman-image.show { opacity: 1; }
+
+    #loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 9999;
+    cursor: pointer;
+}
+
+#loadingScreen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+    
   </style>
 </head>
 
 <body>
+<div id="loadingScreen" onclick="closeLoadingScreen()">
+    <img src="loading.jpg" alt="Loading Screen">
+</div>
+  
   <div class="title">Test Chamber 1</div>
   
   <audio id="wrongAudio" src="nottoworry.mp3"></audio>
@@ -309,6 +331,10 @@
       bunnyVideo.classList.add("hidden");
       bunnyImage.classList.remove("hidden");
     });
+
+    function closeLoadingScreen() {
+    document.getElementById("loadingScreen").style.display = "none";
+}
   </script>
 </body>
 </html>
