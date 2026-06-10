@@ -241,6 +241,14 @@
     let bucketHasHat = false;
 
     const peacefulAudio = document.getElementById("peacefulAudio");
+       // GLaDOS button
+  const gladosButton = document.getElementById("gladosButton");
+  const gladosAudio = document.getElementById("gladosAudio");
+
+  gladosButton.addEventListener("click", () => {
+    gladosAudio.currentTime = 0;
+    gladosAudio.play();
+  });
 
     function startPeacefulAudio() {
       peacefulAudio.volume = 0.35;
@@ -293,16 +301,6 @@
       const userInput = document.getElementById("codeInput").value.trim();
       const wrongAudio = document.getElementById("wrongAudio");
       const gmanImage = document.getElementById("gmanImage");
-
-      // GLaDOS button
-  const gladosButton = document.getElementById("gladosButton");
-  const gladosAudio = document.getElementById("gladosAudio");
-
-  gladosButton.addEventListener("click", () => {
-    gladosAudio.currentTime = 0;
-    gladosAudio.play();
-  });
-
       
       if (userInput === "197") {
         window.location.href = "https://ohlooklizard.github.io/Testchamber2/";
