@@ -125,6 +125,16 @@
       cursor: pointer;
     }
 
+            .glados-button {
+      position: fixed;
+      top: 35px;
+      left: 40px;
+      width: 220px;
+      height: auto;
+      cursor: pointer;
+      z-index: 20;
+    }
+    
     .top-right-button { /* bucket button */
       position: fixed;
       top: 35px;
@@ -198,6 +208,10 @@
 
   <img id="gmanImage" src="gman.jpg" alt="G-Man" class="gman-image" />
   <img id="bucketButton" src="bucket.jpg" alt="Bucket Button" class="top-right-button" />
+
+  <!-- GLaDOS  -->
+    <img id="gladosButton" src="glados.png" alt="GLaDOS Button" class="glados-button">
+    <audio id="gladosAudio" src="glados.mp3"></audio>
   
 <img id="bunnyImage" src="bunny.jpg" alt="Bunny Button" class="bottom-right-media" />
   <video id="bunnyVideo" class="bottom-right-media hidden" src="bunnybleh.mp4" playsinline></video>
@@ -280,6 +294,16 @@
       const wrongAudio = document.getElementById("wrongAudio");
       const gmanImage = document.getElementById("gmanImage");
 
+      // GLaDOS button
+  const gladosButton = document.getElementById("gladosButton");
+  const gladosAudio = document.getElementById("gladosAudio");
+
+  gladosButton.addEventListener("click", () => {
+    gladosAudio.currentTime = 0;
+    gladosAudio.play();
+  });
+
+      
       if (userInput === "197") {
         window.location.href = "https://ohlooklizard.github.io/Testchamber2/";
       } else {
